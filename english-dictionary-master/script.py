@@ -32,7 +32,7 @@ def translate(w):
     else:
         return "The word doesn't exist. Please double check it."
  
-ord = input("nhập từ cần dịch: ")
+word = input("nhập từ cần dịch: ")
 output = translate(word)
 if type(output) == list:
     for item in output:
