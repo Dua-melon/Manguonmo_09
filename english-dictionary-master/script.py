@@ -20,6 +20,7 @@ def translate(w):
     else:
         return "Xin lỗi, không tìm thấy từ trong từ điển!!!"
  
+<<<<<<< HEAD
 def out_put():
     output = translate(entry)
     if type(output) == list:
@@ -52,3 +53,12 @@ frame2 = Frame(frame1, bg = 'white')
 frame2.place(x = 10,y = 10, relwidth = 0.945, relheight = 0.9)
 
 wd.mainloop()
+=======
+word = input("nhập từ cần dịch cho đúng: ")
+output = translate(word)
+if type(output) == list:
+    for item in output:
+        print(item)
+else:
+    print(output)
+>>>>>>> c188d5ab9dcec4e1e2830927ce936fa1d3d7b1ab
