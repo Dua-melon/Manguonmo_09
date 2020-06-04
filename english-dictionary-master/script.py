@@ -1,41 +1,54 @@
-# encoding: utf-8
-"""
-Spyder Editor
-
-In this script the user enter a word via command prompt
-and gets its definition as an output.
-
-"""
-
+from tkinter import*
+from tkinter import scrolledtext
 import json
 from difflib import get_close_matches
 
 data = json.load(open("data.json"))
 
-
 def translate(w):
+    w = entry.get()
     w = w.lower()
     if w in data:
-        return data[w]
-    elif w.title() in data: #if user entered "texas" this will check for "Texas" as well.
+        return (w,':',data[w])
+    elif w.title() in data: 
         return data[w.title()]
-    elif w.upper() in data: #in case user enters words like USA or NATO
+    elif w.upper() in data: 
         return data[w.upper()]
     elif len(get_close_matches(w, data.keys())) > 0:
-        yn = input("Did you mean %s instead? Enter Y if yes, or N if no: " % get_close_matches(w, data.keys())[0])
-        if yn == "Y":
-            return data[get_close_matches(w, data.keys())[0]]
-        elif yn == "N":
-            return "The word doesn't exist. Please double check it."
-        else:
-            return "We didn't understand your entry."
+        return ("Có phải bạn muốn tìm {}? \n {}:{} ".format(get_close_matches(w, data.keys())[0],get_close_matches(w, data.keys())[0],data[get_close_matches(w, data.keys())[0]]) )
+        
     else:
-        return "The word doesn't exist. Please double check it."
+        return "Xin lỗi, không tìm thấy từ trong từ điển!!!"
  
-word = input("nhập từ cần dịch: ")
-output = translate(word)
-if type(output) == list:
-    for item in output:
-        print(item)
-else:
-    print(output)
+def out_put():
+    output = translate(entry)
+    if type(output) == list:
+        for item in output:
+            print(item)
+    else:
+        print(output)
+    label1 = Label(frame2, text = translate(entry))
+    label1.place(x = 10, y = 10)
+
+
+wd = Tk()
+wd.geometry('500x300')
+wd.title("HUMG Dictionary")
+
+frame = Frame(wd,bg = '#cce6ff')
+frame.place(relwidth = 1, relheight = 1)
+
+entry = Entry(frame,width = 50,bd = 5)
+entry.place(x = 60, y = 5)
+
+btn = Button(frame,text = 'Tìm kiếm',padx = 7,pady = 2, command = out_put )
+btn.place(x = 375, y = 5)
+
+
+frame1 = Frame(frame,bg = '#ffe6f2')
+frame1.place(x = 60, y = 40, relheight = 0.7, relwidth = 0.78)
+
+frame2 = Frame(frame1, bg = 'white')
+frame2.place(x = 10,y = 10, relwidth = 0.945, relheight = 0.9)
+
+wd.mainloop()
