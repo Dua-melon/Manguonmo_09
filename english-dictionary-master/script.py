@@ -51,3 +51,50 @@ frame2 = Frame(frame1, bg = 'white')
 frame2.place(x = 10,y = 10, relwidth = 0.945, relheight = 0.9)
 
 wd.mainloop()
+
+
+
+
+
+import pyttsx3 #(thu vien dung de noi, pip install pyttsx3)
+import speech_recognition#thu vien dung de voice to text, phai tai speechrecognition, pyaudio 
+# sau do se co loi voi pyaudio, nhap 2 dong nay vao cmd 
+#pip install pipwin
+#pipwin install pyaudio
+from datetime import datetime # phan de lay ngay thang nam
+
+
+# phan de minh giao tiep voi emma
+virtual_ear = speech_recognition.Recognizer()
+with speech_recognition.Microphone() as mic:
+    print("Emma: I'm hearing you")
+    print('.........')
+    audio = virtual_ear.listen(mic)
+try:
+    you = virtual_ear.recognize_google(audio)
+except:
+    you = ''
+print("You:"+ you)
+
+
+# day la phan AI, phan de Emma hieu ban muon gi
+if you == 'hello':
+    Emma_brain = "xin chao"
+elif you == 'today':
+    Emma_brain = datetime.today().strftime('%d-%m-%Y')
+elif you == 'time':
+    Emma_brain = datetime.today().strftime('%H-%M-%S')
+
+print(Emma_brain)
+
+
+
+# phan de no noi ra
+engine = pyttsx3.init()
+
+# de thay doi giong noi thi dung 2 dong code nay, 0 la giong nam va 1 la giong nu
+voices = engine.getProperty('voices')
+engine.setProperty('voice', voices[1].id)
+
+engine.say(Emma_brain)
+engine.runAndWait() # se co loi no module named 'pythoncom', de sua thi pip install pywin32pip install pywin32
