@@ -1,9 +1,10 @@
+# -*- coding: utf-8 -*-
 from tkinter import*
 from tkinter import scrolledtext
 import json
 from difflib import get_close_matches
 
-data = json.load(open("data.json"))
+data = open('data.txt','r')
 
 def translate(w):
     w = entry.get()
